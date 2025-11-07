@@ -105,7 +105,6 @@ def set_mission_name(mission_name):
 
 def get_mission_name():
     """Retrieve the stored mission name to determine which filters to use"""
-    global _MISSION_NAME
     return _MISSION_NAME
 
 
