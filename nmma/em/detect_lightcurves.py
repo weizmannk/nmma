@@ -96,7 +96,7 @@ def main():
     parser.add_argument(
         "--plots",
         help="comma delimited list of plot types (skymap,tiles,coverage,schedule,efficiency)",
-        default="",
+        default="skymap,tiles,coverage,schedule,efficiency",
     )
     args = parser.parse_args()
 
@@ -189,7 +189,7 @@ def main():
             outdir, f"efficiency_true_{args.label}_{indices[index]}.txt"
         )
 
-        ## Choose band for the best proxy
+        # Choose band for the best proxy
         # for ZTF r-band give the best proxy
         if args.telescope == "ZTF":
             absmag.append(np.min(lcs[index][:, 2]))
