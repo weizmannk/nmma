@@ -191,7 +191,7 @@ requirements.txt file which are necessary for NMMA:
    There is an issue pip installing ``pyfftw`` on arm64 Mac systems; see the dedicated section below for a solution. If any package appeared to have an issue installing, you can first check by attempting to install it again using pip:
 
 .. code::
-   
+
    pip install importlib_resources
    pip install  extinction
    pip install dill
