@@ -201,6 +201,8 @@ requirements.txt file which are necessary for NMMA:
    pip install sncosmo
    pip install scikit-learn
    pip install joblib
+   pip install keras
+   pip install tensorflow
    conda install -c conda-forge p-tqdm
 
 .. note::
