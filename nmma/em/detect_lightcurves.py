@@ -84,8 +84,16 @@ def main():
         default=42,
         help="Injection generation seed (default: 42)",
     )
-    parser.add_argument("--exposuretime", type=int, required=True)
-
+    parser.add_argument(
+        "--exposuretime", 
+        type=int, 
+        required=True
+    )
+    parser.add_argument(
+        "--Tobs", 
+        type=str,
+        default="0.0,1.0"
+    )
     parser.add_argument(
         "--parallel", action="store_true", default=False, help="parallel the runs"
     )
@@ -158,13 +166,13 @@ def main():
         exposuretime = ",".join(
             [str(args.exposuretime) for i in args.filters.split(",")]
         )
-
-        if args.telescope.lower() == "ultrasat":
-            command = f"gwemopt-run --telescopes {args.telescope} --geometry 3d --doTiles --doSchedule  --scheduleType greedy_slew --doTrueLocation --true_location  --true_ra {ra} --true_dec {dec} --true_distance {dist} --timeallocationType powerlaw   --gpstime {gpstime} --event {skymap_file} --filters {args.filters} --exposuretimes {exposuretime} --doSingleExposure --doAlternatingFilters --doEfficiency --lightcurveFiles {lc_file}  -o {outdir} --modelType file --plots {args.plots} --doUsePrimary  --ignore_observability"
-
+        
+        if args.telescope.lower() == 'ultrasat': 
+            command = f"gwemopt-run --telescopes {args.telescope} --geometry 3d --doTiles --doSchedule  --scheduleType greedy_slew --doTrueLocation --true_location  --true_ra {ra} --true_dec {dec} --true_distance {dist} --powerlaw_cl 0.9 --doObservability --doObservabilityExit --timeallocationType powerlaw   --gpstime {gpstime} --event {skymap_file} --filters {args.filters} --exposuretimes {exposuretime} --doSingleExposure --doAlternatingFilters --doEfficiency --lightcurveFiles {lc_file}  -o {outdir} --modelType file --doPlots --doUsePrimary  --ignore_observability --Tobs {args.Tobs}"
+            
         else:
-            command = f"gwemopt-run --telescopes {args.telescope} --geometry 3d --doTiles --doSchedule  --scheduleType greedy_slew --doTrueLocation --true_location  --true_ra {ra} --true_dec {dec} --true_distance {dist}   --timeallocationType powerlaw   --gpstime {gpstime} --event {skymap_file} --filters {args.filters} --exposuretimes {exposuretime} --doSingleExposure --doAlternatingFilters --doEfficiency --lightcurveFiles {lc_file}  -o {outdir} --modelType file --plots {args.plots} --doUsePrimary"
-
+            command = f"gwemopt-run --telescopes {args.telescope} --geometry 3d --doTiles --doSchedule  --scheduleType greedy_slew --doTrueLocation --true_location  --true_ra {ra} --true_dec {dec} --true_distance {dist} --powerlaw_cl 0.9 --doObservability --doObservabilityExit --timeallocationType powerlaw   --gpstime {gpstime} --event {skymap_file} --filters {args.filters} --exposuretimes {exposuretime} --doSingleExposure --doAlternatingFilters --doEfficiency --lightcurveFiles {lc_file}  -o {outdir} --modelType file --doPlots --doUsePrimary --Tobs {args.Tobs}"
+        
         commands.append(command)
 
     print("Number of jobs remaining... %d." % len(commands))
